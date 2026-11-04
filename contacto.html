@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>Contáctanos | ARIZA Joyas de Autor</title>
+  <meta name="description" content="Visítanos en el Centro Comercial Cosacut, en Cúcuta, o escríbenos por WhatsApp. Te asesoramos para elegir tu joya ARIZA.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="cabecera"></div>
+  <main id="principal" class="contenedor">
+    <nav class="migas" aria-label="Migas de pan"><ol><li><a href="index.html">Inicio</a></li><li><span aria-current="page">Contáctanos</span></li></ol></nav>
+    <div class="contacto">
+      <div>
+        <h1 class="tienda__titulo" style="text-align:left">Estamos para ayudarte</h1>
+        <p style="margin-top:14px">Cuéntanos qué buscas y te responderemos con gusto lo antes posible.</p>
+        <ul class="visita__lista" id="datos-contacto"></ul>
+        <div class="visita__botones" id="botones-contacto"></div>
+      </div>
+      <form id="contacto-form" novalidate>
+        <div class="campos campos--dos">
+          <div class="campo" data-campo="c-nombre"><label for="c-nombre">Nombre</label><input id="c-nombre" autocomplete="name" required><p class="campo__error" id="c-nombre-error" hidden></p></div>
+          <div class="campo"><label for="c-celular">Celular (opcional)</label><input id="c-celular" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10"></div>
+          <div class="campo campo--ancho"><label for="c-asunto">Asunto</label>
+            <select id="c-asunto"><option value="asesoria">Asesoría para elegir una joya</option><option value="pedido">Información de un pedido</option><option value="internacional">Envío internacional</option><option value="distribuidor">Quiero ser distribuidor</option><option value="otro">Otro</option></select>
+          </div>
+          <div class="campo campo--ancho" data-campo="c-mensaje"><label for="c-mensaje">Mensaje</label><textarea id="c-mensaje" maxlength="500" required></textarea><p class="campo__error" id="c-mensaje-error" hidden></p></div>
+        </div>
+        <button class="btn btn--lleno btn--bloque" type="submit" style="margin-top:16px">Enviar por WhatsApp</button>
+        <p class="contacto__nota">Abriremos WhatsApp con tu mensaje listo para enviar. Nada se envía hasta que tú lo confirmes.</p>
+      </form>
+    </div>
+  </main>
+  <div id="pie"></div>
+
+  <script src="js/config.js"></script>
+  <script src="data/catalogo.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    (function () {
+      const { CFG, $, esc, icono, iconoWhatsapp, enlaceWhatsapp } = window.Ariza;
+      const t = CFG.tienda;
+      $('#datos-contacto').innerHTML = `
+        <li>${icono('ubicacion')}<span>${esc(t.direccion)}</span></li>
+        <li>${icono('reloj')}<span>${t.horario.map(esc).join('<br>')}</span></li>
+        <li>${icono('telefono')}<a class="enlace" href="tel:${t.telefono.replace(/\s/g, '')}">${t.telefono}</a></li>
+        <li>${icono('correo')}<a class="enlace" href="mailto:${t.correo}">${t.correo}</a></li>`;
+      $('#botones-contacto').innerHTML = `
+        <a class="btn" href="${enlaceWhatsapp('¡Hola ARIZA!')}" target="_blank" rel="noopener">${iconoWhatsapp()}WhatsApp directo</a>
+        <a class="btn" href="${t.mapa}" target="_blank" rel="noopener">Cómo llegar</a>`;
+
+      const asunto = new URLSearchParams(location.search).get('asunto');
+      if (asunto && $(`#c-asunto option[value="${CSS.escape(asunto)}"]`)) $('#c-asunto').value = asunto;
+
+      const marcar = (id, msg) => {
+        document.querySelector(`[data-campo="${id}"]`).classList.toggle('campo--error', !!msg);
+        const e = document.getElementById(`${id}-error`);
+        e.textContent = msg; e.hidden = !msg;
+      };
+      $('#contacto-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nombre = $('#c-nombre').value.trim();
+        const mensaje = $('#c-mensaje').value.trim();
+        marcar('c-nombre', nombre ? '' : 'Escribe tu nombre.');
+        marcar('c-mensaje', mensaje ? '' : 'Escribe tu mensaje.');
+        if (!nombre) { $('#c-nombre').focus(); return; }
+        if (!mensaje) { $('#c-mensaje').focus(); return; }
+        const celular = $('#c-celular').value.trim();
+        const texto = `¡Hola ARIZA! Soy ${nombre}${celular ? ` (${celular})` : ''}.\nAsunto: ${$('#c-asunto').selectedOptions[0].textContent}\n${mensaje}`;
+        window.open(enlaceWhatsapp(texto), '_blank', 'noopener');
+      });
+    })();
+  </script>
+</body>
+</html>
