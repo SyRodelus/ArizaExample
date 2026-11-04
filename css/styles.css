@@ -531,6 +531,4 @@ body.barra-visible .whatsapp { bottom: calc(92px + env(safe-area-inset-bottom));
 .mensaje.visible { opacity: 1; }
 .cargando { text-align: center; padding: 72px 0; color: var(--texto-2); }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
-}
+/* El ajuste de "reducir movimiento" está en lujo.css. */

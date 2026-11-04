@@ -14,6 +14,12 @@ python -m http.server 8321
 
 Luego entra a `http://localhost:8321`.
 
+## Capa visual
+
+El diseño premium vive aparte de la lógica: `css/lujo.css` (se carga después de `styles.css`), `js/lujo-inicio.js` (en `<head>`) y `js/lujo.js` (al final de cada página). Solo agregan clases y estilos; no llaman a carrito, catálogo ni pagos. Si se quitan, la tienda sigue funcionando con el diseño anterior, salvo el inicio, cuyo HTML se reorganizó.
+
+Con "reducir movimiento" activado en el sistema se apagan la intro, el parallax y los bucles, y quedan los fundidos. Para ver todos los efectos en ese equipo, abre cualquier página con `?movimiento=1` (se recuerda durante la sesión).
+
 ## Estructura
 
 | Archivo | Qué hace |
