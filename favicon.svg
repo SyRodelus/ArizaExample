@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs><linearGradient id="oro" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffea88"/><stop offset="1" stop-color="#b29f49"/></linearGradient></defs>
+  <rect width="32" height="32" fill="#16301f"/>
+  <path fill="url(#oro)" d="M9 25 14 6h4l5 19h-3.400l-1-4h-5.200l-1 4H9Zm5.200-7h3.600L16 10.500 14.200 18Z"/>
+</svg>
